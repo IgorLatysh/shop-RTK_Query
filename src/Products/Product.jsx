@@ -38,8 +38,8 @@ const Product = () => {
                 <hr/>
                 <h3 className="pb-5">Products related to this item</h3>
                 <Swiper
-                    spaceBetween={50}
-                    slidesPerView={4}
+                    spaceBetween={40}
+                    slidesPerView={3}
                 >
                     {goods.map(product => {
                         return (

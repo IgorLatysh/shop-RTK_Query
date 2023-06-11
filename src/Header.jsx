@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getTotalQuantity, removeFromCart} from "./store/slices/cart";
+import {Container, Nav, Navbar} from "react-bootstrap";
 
 
 const Header = () => {
@@ -19,25 +20,22 @@ const Header = () => {
         dispatch(removeFromCart(carts));
     };
 
-    return (<>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container px-4 px-lg-5 collapse navbar-collapse" id="navbarNavDropdown">
-                <ul className="navbar-nav mr-auto active me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li className="nav-item">
-                        <NavLink to="/" class="nav-link"
-                                 className={isActive => "li-nav nav-link" + (!isActive ? "unselected" : "")}>
+    return (
+        <>
+            <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+                <Container>
+                    <Nav className="me-auto">
+                        <NavLink to="/"
+                                 className={isActive => "li-nav" + (!isActive ? "unselected" : "")}>
                             Home</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to="/smartphones" class="nav-link"
-                                 className={isActive => "li-nav nav-link" + (!isActive ? " unselected" : "")}>Smartphones</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to="/laptops" class="nav-link"
-                                 className={isActive => "li-nav nav-link" + (!isActive ? " unselected" : "")}>Laptops</NavLink>
-                    </li>
-                </ul>
-                <form className="d-flex">
+                        <NavLink to="/smartphones"
+                                 className={isActive => "li-nav" + (!isActive ? " unselected" : "")}>
+                            Smartphones</NavLink>
+                        <NavLink to="/laptops"
+                                 className={isActive => "li-nav " + (!isActive ? " unselected" : "")}>
+                            Laptops</NavLink>
+                    </Nav>
+                    <form className="d-flex">
                         <span className="btn btn-outline-dark" onClick={toggleCart}>
                             <i className="bi-cart-fill me-1"></i>
                             Cart
@@ -45,50 +43,50 @@ const Header = () => {
                                 {cartTotalQuantity}
                             </span>
                         </span>
-                </form>
-            </div>
-        </nav>
-        <aside className={sidebar ? "sidebar active" : "sidebar"}>
-            <nav className="nav-cart">
-                <div className="text-center">
-                    <div className="p-3 bg-body">
-                        {cart?.map(carts => {
-                            return (
-                                <div className="content-2">
-                                    <div className="content-img">
-                                        <img className="card-img-top  mb-5 mb-md-0" src={carts?.thumbnail}
-                                             alt={carts?.title}/>
-                                    </div>
-                                    <div className="navbar content">
-                                        <div>
-                                            <span className="h6" key={carts.id}>{carts.title}</span>
+                    </form>
+                </Container>
+            </Navbar>
+            <aside className={sidebar ? "sidebar active" : "sidebar"}>
+                <nav className="nav-cart">
+                    <div className="text-center">
+                        <div className="p-3 bg-body">
+                            {cart?.map(carts => {
+                                return (
+                                    <div className="content-2">
+                                        <div className="content-img">
+                                            <img className="card-img-top  mb-5 mb-md-0" src={carts?.thumbnail}
+                                                 alt={carts?.title}/>
                                         </div>
-                                        <input className="form-control text-center input-size"
-                                               id="inputQuantity" type="num"
-                                               value={carts?.cartQuantity}/>
-                                        <button className="btn btn-outline-dark content" onClick={() => {
-                                            remove(carts)
-                                        }}>
-                                            <i className="bi bi-trash"></i>
-                                        </button>
+                                        <div className="navbar content">
+                                            <div>
+                                                <span className="h6" key={carts.id}>{carts.title}</span>
+                                            </div>
+                                            <input className="form-control text-center input-size"
+                                                   id="inputQuantity" type="num"
+                                                   value={carts?.cartQuantity}/>
+                                            <button className="btn btn-outline-dark content" onClick={() => {
+                                                remove(carts)
+                                            }}>
+                                                <i className="bi bi-trash"></i>
+                                            </button>
 
-                                    </div>
-                                </div>)
-                        })}
-                        <h6>Subtotal</h6>
-                        <span>${cartTotalAmount.toFixed(0)}</span>
+                                        </div>
+                                    </div>)
+                            })}
+                            <h6>Subtotal</h6>
+                            <span>${cartTotalAmount.toFixed(0)}</span>
+                        </div>
+                    </div>
+                </nav>
+            </aside>
+            <header className="bg-dark py-5">
+                <div className="container px-4 px-lg-5 my-5">
+                    <div className="text-center text-white">
+                        <h1 className="display-4 fw-bolder">Shop in style</h1>
                     </div>
                 </div>
-            </nav>
-        </aside>
-        <header className="bg-dark py-5">
-            <div className="container px-4 px-lg-5 my-5">
-                <div className="text-center text-white">
-                    <h1 className="display-4 fw-bolder">Shop in style</h1>
-                </div>
-            </div>
-        </header>
-    </>);
+            </header>
+        </>);
 };
 
 export default Header;
